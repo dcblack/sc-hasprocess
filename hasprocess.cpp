@@ -98,7 +98,7 @@ SC_MODULE( Top_module ) {
   NoMacro_module         noMacro         { "noMacro"         };
   Alt1Macro_module       alt1Macro       { "alt1Macro"       };
   Alt2Macro_module       alt2Macro       { "alt2Macro"       };
-  SC_CTOR( Top_module ) { } //< just need declaration
+  Top_module( sc_core::sc_module_name instance ) { } //< just need declaration
 };
 
 //------------------------------------------------------------------------------
