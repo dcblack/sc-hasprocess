@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+# OS garbage
+.DS_Store
+thumbs.db
