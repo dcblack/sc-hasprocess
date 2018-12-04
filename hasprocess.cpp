@@ -71,12 +71,21 @@ struct NoMacro_module : sc_core::sc_module {
 };
 
 //------------------------------------------------------------------------------
-#define MY_THREAD( METHOD ) sc_core::sc_spawn( sc_core::sc_bind( &METHOD, this ) )
-struct AltMacro_module : sc_core::sc_module {
-  AltMacro_module( sc_core::sc_module_name instance ) {
-    MY_THREAD( AltMacro_module::AltMacro_thread );
+#define MY1_THREAD( METHOD ) sc_core::sc_spawn( sc_core::sc_bind( &METHOD, this ) )
+struct Alt1Macro_module : sc_core::sc_module {
+  Alt1Macro_module( sc_core::sc_module_name instance ) {
+    MY1_THREAD( Alt1Macro_module::Alt1Macro_thread );
   }
-  void AltMacro_thread( void ) { INFO( "Hello from " <<  __func__ ); }
+  void Alt1Macro_thread( void ) { INFO( "Hello from " <<  __func__ ); }
+};
+
+//------------------------------------------------------------------------------
+#define MY2_THREAD( METHOD ) sc_core::sc_spawn( [&](){ METHOD();} )
+struct Alt2Macro_module : sc_core::sc_module {
+  Alt2Macro_module( sc_core::sc_module_name instance ) {
+    MY2_THREAD( Alt2Macro_thread );
+  }
+  void Alt2Macro_thread( void ) { INFO( "Hello from " <<  __func__ ); }
 };
 
 //------------------------------------------------------------------------------
@@ -87,7 +96,8 @@ SC_MODULE( Top_module ) {
   NoCtor3Macro_module    noCtor3Macro    { "noCtor3Macro"    };
 //NoProcessMacro_module  noProcessMacro  { "noProcessMacro"  };
   NoMacro_module         noMacro         { "noMacro"         };
-  AltMacro_module        altMacro        { "altMacro"        };
+  Alt1Macro_module       alt1Macro       { "alt1Macro"       };
+  Alt2Macro_module       alt2Macro       { "alt2Macro"       };
   SC_CTOR( Top_module ) { } //< just need declaration
 };
 
